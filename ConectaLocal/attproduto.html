@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <title>Adicionar Produto</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 16px;
+      background-color: #243a69;
+      color: white;
+    }
+
+    .cabecalho-menu {
+      cursor: pointer;
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .cabecalho-menu span {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      display: block;
+    }
+
+    .header-icones {
+      display: flex;
+      gap: 48px;
+      padding-left: 88px;
+      padding-right: 56px;
+    }
+
+    .header-icones a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+      padding: 6px;
+      border-radius: 8px;
+    }
+
+    .header-icones a img.icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .header-icones a:hover,
+    .header-icones a:focus {
+      background-color: #4098D0;
+    }
+
+    .header-search {
+      display: flex;
+      align-items: center;
+      background-color: #3F5A96;
+      border-radius: 12px;
+      padding: 10px 10px;
+      flex-grow: 1;
+      margin: 0 20px;
+      color: white;
+    }
+
+    .header-search input {
+      flex-grow: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #D3D3D3;
+      padding-left: 8px;
+    }
+
+    .header-search input::placeholder {
+      color: #D3D3D3;
+    }
+
+    .header-search img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .perfil-grupo {
+      margin-left: 72px;
+      margin-right: 72px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .perfil-grupo img {
+      width: 28px;
+      height: 28px;
+      margin-right: 2px;
+    }
+
+    .rodape-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #E8E8E8;
+      border-radius: 8px;
+      width: 140px;
+      margin-top: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .rodape-menu a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      color: #4F4F4F;
+      text-decoration: none;
+      font-size: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .rodape-menu a img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .rodape-menu a:hover {
+      background-color: #d3d1d1;
+      border-radius: 10px;
+    }
+
+    .barra_pesquisa {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 80px;
+      background-color: #243a69;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .barra_pesquisa a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      transition: all 0.3s ease;
+    }
+
+    .barra_pesquisa a img.icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .barra_pesquisa a:hover,
+    .barra_pesquisa a:focus {
+      background-color: #4098D0;
+      border-radius: 8px;
+    }
+
+    .barra_pesquisa.open {
+      transform: translateX(0);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      z-index: 999;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    .edit-product-container {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      padding: 20px;
+      max-width: 600px;
+      margin: 50px auto;
+      border: 1px solid #d3d1d1;
+      border-radius: 16px;
+      background-color: #f4f4f4;
+      margin-top: 8%;
+    }
+
+    .edit-product-container h1 {
+      font-size: 1.6rem;
+      margin-bottom: 2rem;
+      color: #333;
+      text-align: center;
+    }
+
+    .edit-product-container label {
+      display: block;
+      font-size: 18px;
+      color: #4F4F4F;
+      margin-bottom: 8px;
+    }
+
+    .edit-product-container input[type="text"],
+    .edit-product-container input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 22px;
+      border-radius: 12px;
+      border: 1px solid #cccccc;
+      font-size: 14px;
+    }
+
+    .edit-product-container button {
+      width: 48%;
+      padding: 12px;
+      margin: 10px 1%;
+      font-size: 16px;
+      color: white;
+      background-color: #243a69;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .edit-product-container button.delete {
+      background-color: #243a69;
+    }
+
+  @media (max-width: 864px) {
+      .header-icones {
+        display: none;
+      }
+
+    .cabecalho-menu {
+        display: flex;
+      }
+
+    .header-search {
+        max-width: 80%;
+        margin: 0 auto;
+      }
+
+    .perfil-grupo {
+        display: none;
+      }
+
+    .barra_pesquisa {
+        width: 80px;
+      }
+
+    .barra_pesquisa a {
+      padding: 10px 10px;
+      margin-bottom: 32px;
+      transition: background-color 0.2s linear;
+      border-radius: 12px;
+    }
+    
+    .barra_pesquisa a img[src="cmercado.svg"] {
+    filter: brightness(0) invert(1);
+    }
+
+    .barra_pesquisa a img[src="porta.svg"],
+    .barra_pesquisa a img[src="conf.svg"]{
+        filter: brightness(0) invert(1);
+    }
+
+    .barra_pesquisa a:last-child {
+      margin-top: auto;
+      margin-bottom: 24px;
+    }
+  }
+  
+</style>
+</head>
+<body>
+
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+  <header class="header">
+    <div class="cabecalho-menu" id="menu-btn" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="header-icones">
+      <a href="#"><img src="casa.svg" alt="Home" class="icon"></a>
+      <a href="#"><img src="mercado.svg" alt="Mercado" class="icon"></a>
+      <a href="#"><img src="pao.svg" alt="Pão" class="icon"></a>
+    </div>
+    <div class="header-search">
+      <input type="text" placeholder="Pesquisar">
+      <img src="lupa.svg" alt="Buscar" class="search-icon">
+    </div>
+    <div class="perfil-grupo" onclick="toggleDropdown()">
+      <img src="usu.svg" alt="Perfil" class="perfil-icon">
+      <span>Perfil</span>
+      <img src="seta.svg" alt="Seta" class="seta-iconseta">
+      <div class="rodape-menu" id="rodape-menu">
+        <a href="#"><img src="cmercado1.svg" alt="Cadastrar Mercado"> Cadastrar Mercado</a>
+        <a href="#"><img src="conf.svg" alt="Opções"> Opções</a>
+        <a href="#"><img src="porta.svg" alt="Sair"> Sair</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="barra_pesquisa" id="barra_pesquisa">
+    <a href="#"><img src="casa.svg" alt="Home" class="icon"></a>
+    <a href="#"><img src="mercado.svg" alt="Mercado" class="icon"></a>
+    <a href="#"><img src="pao.svg" alt="Pão" class="icon"></a>
+    <a href="#"><img src="conf.svg" alt="Configurações" class="icon"></a>
+    <a href="#"><img src="cmercado.svg" alt="Cadastrar Mercado" class="icon"></a>
+    <a href="#"><img src="porta.svg" alt="Sair" class="icon"></a>
+  </nav>
+
+  <form action="processar_produto.php" method="POST" enctype="multipart/form-data">
+    <div class="edit-product-container">
+      <h1>Editar Produto</h1>
+
+      <!-- Nome do Produto -->
+      <label for="product-name">Nome do Produto:</label>
+      <input type="text" id="product-name" name="nome_produto" placeholder="Nome do Produto" required>
+
+      <!-- Descrição -->
+      <label for="product-description">Descrição:</label>
+      <input type="text" id="product-description" name="descricao_produto" placeholder="Descrição do Produto" required>
+
+      <!-- Imagem -->
+      <label for="product-image">Imagem do Produto:</label>
+      <input type="file" id="product-image" name="imagem_produto" accept="image/*" required>
+
+      <!-- Data de Encerramento -->
+      <label for="end-date">Data de Encerramento:</label>
+      <input type="date" id="end-date" name="data_encerramento" required>
+
+      <div style="display: flex; justify-content: space-between;">
+        <button type="submit">Salvar</button>
+        <button type="reset" class="delete">Excluir</button>
+      </div>
+    </div>
+  </form>
+
+  <script>
+    function toggleMenu() {
+      const barra_pesquisa = document.getElementById('barra_pesquisa');
+      const overlay = document.getElementById('overlay');
+      barra_pesquisa.classList.toggle('open');
+      overlay.classList.toggle('show');
+    }
+
+    function toggleDropdown() {
+      const rodape = document.getElementById('rodape-menu');
+      rodape.style.display = rodape.style.display === 'block' ? 'none' : 'block';
+    }
+
+    document.addEventListener('click', function(event) {
+      const barra_pesquisa = document.getElementById('barra_pesquisa');
+      const overlay = document.getElementById('overlay');
+      const profileGroup = document.querySelector('.perfil-grupo');
+      const dropdownMenu = document.getElementById('rodape-menu');
+      if (!profileGroup.contains(event.target)) {
+        dropdownMenu.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>

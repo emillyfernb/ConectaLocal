@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <title>Criar Conta</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #1E3264;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 569px;
+            height: 540px;
+            background-color: #fff;
+            padding: 56px;
+            border-radius: 36px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .form-group, .form-group1 {
+            position: relative;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .form-group label, .form-group1 label {
+            font-size: 1rem;
+            color: #555;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bolder;
+        }
+
+        .form-group input, .form-group1 input {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 14px;
+            border-radius: 16px;
+            border: none;
+            background-color: #CCCCCC;
+        }
+
+        .form-group1 input:focus, .form-group input:focus {
+            outline: none;
+            border-color: #1E3264;
+            box-shadow: 0 0 4px rgba(30, 50, 100, 0.5);
+        }
+
+        .btn {
+            width: 36%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #1E3264;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 16px;
+        }
+
+        .btn:hover {
+            background-color: #142248;
+        }
+
+        .signup-link {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .signup-link a {
+            color: #1E3264;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        #icon {
+            position: absolute;
+            top: 70%;
+            right: 10px;
+            transform: translateY(-50%);
+            background-size: cover;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            z-index: 1;
+            background: url("olhofechado.svg");
+        }
+
+        #icon.hide {
+            background-size: cover;
+            background: url("olhoaberto.svg");
+        }
+
+        @media (max-width: 500px) {
+            .container{
+                width: 90%;
+                padding: 24px;
+            }
+
+            #icon {
+                width: 20px;
+                height: 20px;
+                right: 5px;
+            }
+
+            .btn{
+                font-size: 0.9rem; 
+            }
+
+            .cadastre-se {
+                margin-top: 0.8rem;
+            }
+        html, body {
+            min-width: 300px; /* Impede que a largura da página seja menor que 300px */
+            overflow-x: hidden; /* Impede a rolagem horizontal caso a largura mínima seja atingida */
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastrar consumidor</h2>
+        <form action="teste (2).html" method="POST">
+            <div class="form-group">
+                <label for="name">Nome Completo</label>
+                <input type="text" id="text" name="nome" placeholder="Digite seu nome" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+            </div>
+            <div class="form-group1">
+                <label for="password">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" minlength="8" required>
+                <div id="icon" onclick="showHide()" class="hide"></div>
+            </div>
+            <button type="submit" class="btn">Entrar</button>
+        </form>
+        <p class="signup-link">Já tem uma conta? <a href="login.html">Faça login</a></p>
+    </div>
+    <script>
+        const password = document.getElementById('senha');
+        const icon = document.getElementById('icon');
+        
+        function showHide() {
+            if (password.type === 'password') {
+                password.setAttribute('type','text');
+                icon.classList.add('hide')
+            } else {
+                password.setAttribute('type', 'password');
+                icon.classList.remove('hide')
+            }
+        }
+    </script>
+</body>
+</html>
